@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./main.css" type="text/css">
+    <title>Fair Share</title>
+  </head>
+  <body>
+    <header>
+      <h1>Fair Share</h1>
+    </header>
+    <main>
+      <form class="" action="index.html" method="post">
+        <fieldset>
+          <label for="price">Enter Price for Entire Property</label>
+          <input type="text" name="" id="price" placeholder="£">
+        </fieldset>
+        <fieldset>
+          <label for="housemates">Enter Number of Housemates</label>
+          <input type="text" name="" id="housemates" placeholder="ex. 5">
+        </fieldset>
+        <fieldset>
+          <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 30%</label>
+          <input type="text" name="" id="common" placeholder="ex. 30%">
+        </fieldset>
+        <fieldset class="room_size">
+          <div class="room_info">
+            <label for="bedroom">Enter Dimensions of <span>First</span> Room in Metres or Feet</label>
+            <input type="text" name="" id="bedroom" placeholder="ex. 3.8 * 2.9">
+          </div>
+          <div class="room_info">
+            <label for="roommates">How Many People Will Live in This Room?</label>
+            <input type="text" name="" id="roommates" placeholder="ex. 1">
+          </div>
+          <button id="add_room" type="button" name="button">Add Another Room</button>
+        </fieldset>
+
+        <input type="submit" name="" value="Enter" class="submit">
+      </form>
+      <!-- <fieldset>
+        <label for="bathroom">Enter Size of Bathroom</label>
+        <input type="text" name="" id="bathroom">
+      </fieldset>
+      <fieldset>
+        <label for="living_room">Enter Size of Living Room</label>
+        <input type="text" name="" id="living_room">
+      </fieldset> -->
+
+
+    </main>
+    <script type="text/javascript" src="./app.js"></script>
+  </body>
+</html>
