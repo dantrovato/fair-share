@@ -5,12 +5,13 @@ body {
 }
 
 body, button {
-  background: #568F6D;
+  background: linear-gradient(#568F6D, #0F4205);
   color: #EAFBE5;
 }
 
 fieldset {
   display: flex;
+  position: relative;
   justify-content: space-between;
   margin-bottom: 0.4rem;
 }
@@ -32,7 +33,7 @@ main {
 
 .submit, button {
   font-size: 1.2rem;
-  width: 10%;
+  /* width: 10%; */
   padding: 1rem;
 }
 
@@ -55,4 +56,27 @@ button {
   width: 20%;
   margin: auto;
   /* margin-right: 50%; */
+}
+
+#calculate {
+  margin-bottom: 0.4rem;
+}
+
+.move_away {
+  position: relative;
+  z-index: 10;
+  left: 8rem;
+}
+
+footer {
+  width: 100%;
+}
+
+footer #results {
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
 }

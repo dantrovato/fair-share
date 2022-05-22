@@ -25,29 +25,64 @@
         </fieldset>
         <fieldset class="room_size">
           <div class="room_info">
-            <label for="bedroom">Enter Dimensions of <span>First</span> Room in Metres or Feet</label>
-            <input type="text" name="" id="bedroom" placeholder="ex. 3.8 * 2.9">
+            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
+            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9">
           </div>
           <div class="room_info">
             <label for="roommates">How Many People Will Live in This Room?</label>
-            <input type="text" name="" id="roommates" placeholder="ex. 1">
+            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1">
           </div>
           <button id="add_room" type="button" name="button">Add Another Room</button>
         </fieldset>
+        <!-- <fieldset class="room_size">
+          <div class="room_info">
+            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
+            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="12">
+          </div>
+          <div class="room_info">
+            <label for="roommates">How Many People Will Live in This Room?</label>
+            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
+          </div>
+          <button id="add_room" type="button" name="button">Add Another Room</button>
+        </fieldset>
+        <fieldset class="room_size">
+          <div class="room_info">
+            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
+            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="10.8">
+          </div>
+          <div class="room_info">
+            <label for="roommates">How Many People Will Live in This Room?</label>
+            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
+          </div>
+          <button id="add_room" type="button" name="button">Add Another Room</button>
+        </fieldset>
+        <fieldset class="room_size">
+          <div class="room_info">
+            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
+            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="9.9">
+          </div>
+          <div class="room_info">
+            <label for="roommates">How Many People Will Live in This Room?</label>
+            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
+          </div>
+          <button id="add_room" type="button" name="button">Add Another Room</button>
+        </fieldset> -->
 
-        <input type="submit" name="" value="Enter" class="submit">
+        <input id="calculate" type="submit" value="Calculate" class="submit">
       </form>
-      <!-- <fieldset>
-        <label for="bathroom">Enter Size of Bathroom</label>
-        <input type="text" name="" id="bathroom">
+    </main>
+    <footer class="hidden">
+      <fieldset id="results">
+        <p id="common_area_value"></p>
+        <p id="common_area_value_for_each"></p>
+        <p id="rent_for_rooms"></p>
+        <p id="totals"></p>
       </fieldset>
-      <fieldset>
+      <!-- <fieldset>
         <label for="living_room">Enter Size of Living Room</label>
         <input type="text" name="" id="living_room">
       </fieldset> -->
-
-
-    </main>
+    </footer>
     <script type="text/javascript" src="./app.js"></script>
   </body>
 </html>
