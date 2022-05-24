@@ -13,7 +13,7 @@
       <form class="" action="index.html" method="post">
         <fieldset>
           <label for="price">Enter Price for Entire Property</label>
-          <input type="text" name="" id="price" placeholder="£">
+          <input type="text" name="" id="price" placeholder="£3000">
         </fieldset>
         <fieldset>
           <label for="housemates">Enter Number of Housemates</label>
@@ -23,16 +23,16 @@
           <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 30%</label>
           <input type="text" name="" id="common" placeholder="ex. 30%">
         </fieldset>
-        <fieldset class="room_size">
-          <div class="room_info">
-            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
+        <fieldset class="room_size" id="initial_add_room">
+          <!-- <div class="room_info">
+            <label for="bedrooms">Enter Dimensions of Room <span>1</span> in Metres or Feet</label>
             <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9">
           </div>
           <div class="room_info">
             <label for="roommates">How Many People Will Live in This Room?</label>
             <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1">
-          </div>
-          <button id="add_room" type="button" name="button">Add Another Room</button>
+          </div> -->
+          <button id="add_room" type="button" name="button">Add Room Info</button>
         </fieldset>
         <!-- <fieldset class="room_size">
           <div class="room_info">
@@ -73,10 +73,13 @@
     </main>
     <footer class="hidden">
       <fieldset id="results">
+        <h1>The Rent:</h1>
+        <p id="totals"></p>
+        <h1>The Breakdown:</h1>
         <p id="common_area_value"></p>
         <p id="common_area_value_for_each"></p>
         <p id="rent_for_rooms"></p>
-        <p id="totals"></p>
+
       </fieldset>
       <!-- <fieldset>
         <label for="living_room">Enter Size of Living Room</label>

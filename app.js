@@ -1,10 +1,15 @@
 function addRoomInfo() {
+  const id = ID();
+  roomsInfo.push({id: id});
+
+  const initialAddRoom = document.querySelector("#initial_add_room").classList.add("hidden");
   const form = document.querySelector("form");
   const roomSize = document.querySelector(".room_size");
   const button = document.querySelector("#add_room");
   const calculate = document.querySelector("#calculate");
   const fieldset = document.createElement("fieldset");
   fieldset.classList.add("room_size");
+  fieldset.id = "room" + id;
   const firstDiv = document.createElement("div");
   const secondDiv = document.createElement("div");
   const firstLabel = document.createElement("label");
@@ -15,7 +20,7 @@ function addRoomInfo() {
   firstDiv.classList.add("room_info");
   secondDiv.classList.add("room_info");
   firstLabel.setAttribute("for", "bedroom");
-  firstLabel.textContent = "Enter Dimensions of Next Largest Room in Metres or Feet";
+  firstLabel.textContent = `Enter Dimensions of Room ${id} in Metres or Feet`;
   firstInput.setAttribute("type", "text");
   firstInput.setAttribute("id", "bedrooms");
   firstInput.setAttribute("class", "bedrooms");
@@ -39,13 +44,20 @@ function addRoomInfo() {
   form.appendChild(calculate);
 }
 
+function generateId() {
+  let id = 0;
+  return function() {
+    id += 1;
+    return id;
+  }
+}
+
+const ID = generateId();
+const roomsInfo = [];
+
 document.addEventListener("DOMContentLoaded", () => {
-  let entirePrice = document.querySelector("#price");
-  let numberHousemates = document.querySelector("#housemates");
-  let valueSharedAreas = document.querySelector("#common");
-  let roomSizes = document.getElementsByClassName('bedrooms');
-  let roomMates = document.getElementsByClassName("roommates");
   const addRoom = document.querySelector("#add_room");
+
   addRoom.addEventListener("click", event => {
     event.preventDefault();
     addRoomInfo();
@@ -60,39 +72,66 @@ document.addEventListener("DOMContentLoaded", () => {
   calculate.addEventListener("click", event => {
     event.preventDefault();
 
-    if (!entirePrice.value || !numberHousemates.value || !valueSharedAreas.value ||
-      !roomSizes.length || !roomMates.length) {
-        calculate.value = "Not So Fast";
-        // calculate.classList.add("move_away");
-        setTimeout(function () {
-          calculate.value = "Calculate";
-        }, 3000);
-        return;
-    }
+    const entirePrice = document.querySelector("#price");
+    const numberHousemates = Number(document.querySelector("#housemates").value);
+    const valueSharedAreas = document.querySelector("#common");
+    const roomSizes = document.getElementsByClassName('bedrooms');
+    const roomMates = document.getElementsByClassName("roommates");
 
-    console.log(entirePrice.value);
-    console.log(numberHousemates.value);
-    console.log(valueSharedAreas.value);
+    // if (!entirePrice.value || !valueSharedAreas.value ||
+    //   !roomSizes.length || !roomMates.length) {
+    //   calculate.value = "Not So Fast";
+      // calculate.classList.add("move_away");
+    //   setTimeout(function () {
+    //     calculate.value = "Calculate";
+    //   }, 3000);
+    //   return;
+    // }
+
     let sizesArr = [... roomSizes].map(room => Number(room.value));
-    console.log(sizesArr);
     const matesArr = [... roomMates].map(mates => mates.value);
-    console.log(matesArr);
-
     const totalCommon = Number(valueSharedAreas.value) * Number(entirePrice.value) / 100;
     const remainingRent = Number(entirePrice.value) - totalCommon;
 
     const totalArea = sizesArr.reduce((a, b) => a + b);
     const percentages = sizesArr.map(size => {
+
       return size * remainingRent / totalArea;
     });
 
-    const rents = percentages.
-    map(percentage => Math.round(percentage + totalCommon / Number(numberHousemates.value)));
+    // const rents = percentages.map(percentage => Math.round(percentage + totalCommon / Number(numberHousemates)));
+
+
+    document.querySelector("footer").classList.remove("hidden");
+    roomsInfo.forEach((room, idx) => {
+      let numRoommates = Number(document.querySelector("#room" + room.id).firstElementChild.nextSibling.firstChild.nextElementSibling.value);
+      // numberHousemates += numRoommates;
+      room.roommates = numRoommates;
+      room.dimentions = Number(document.querySelector("#room" + room.id).firstElementChild.firstChild.nextElementSibling.value);
+      room.roomPrice = percentages[idx] / room.roommates;
+      room.totalPrice = (percentages[idx] / room.roommates) + (totalCommon / numberHousemates);
+
+    });
+
+    let html = "";
+    roomsInfo.forEach((room, i) => {
+
+      html += `<p>Room ${room.id} has ${room.roommates} occupant paying a total rent of ${Math.round(room.roomPrice + totalCommon / Number(numberHousemates))} each</p>`;
+    });
+
+    totals.innerHTML = html;
 
     commonAreaValue.textContent = `The value of common area is ${Math.round(totalCommon)}`;
-    commonAreaValueForEach.textContent = `Each flatmate pays ${Math.round(totalCommon / Number(numberHousemates.value))}`;
+    commonAreaValueForEach.textContent = `Each of the ${numberHousemates} flatmates pays ${Math.round(totalCommon / Number(numberHousemates))} for an equal share of the common areas.`;
     rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}`;
-    totals.textContent = `Each room plus share of common area will total to: ${rents.join(" ")}`;
-    document.querySelector("footer").classList.remove("hidden");
+    // totals.textContent = `Each room plus share of common area will total to: ${rents.join(" ")}`;
+
+
+
+    console.log(roomsInfo);
+    console.log(numberHousemates);
+
   });
 });
+
+// take id of room and take note of how many people that room will have. then each roommate adds share of common area
