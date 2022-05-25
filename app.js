@@ -52,6 +52,36 @@ function generateId() {
   }
 }
 
+function countHousemates(rooms) {
+  let total = 0;
+  rooms.forEach(room => {
+    total += room.roommates;
+  });
+  return total;
+};
+
+function getNumOfRooms(rooms) {
+  return rooms.map(room => room.id).sort().reverse()[0];
+}
+
+function removeIncompleteRooms(rooms) { // ========================================================================
+  // remove from page and from object:
+
+  // get ids of rooms that are incomplete
+const incompleteRoomsID = rooms.filter(room => room.roommates === 0 || room.dimentions === 0).map(room => room.id);
+incompleteRoomsID.forEach(id => {
+  let room = document.querySelector(`#room${id}`);
+  room.remove();
+});
+
+  const completeRooms = rooms.filter(room => room.roommates !== 0 && room.dimentions !== 0);
+  rooms.length = 0;
+  completeRooms.forEach(room => {
+    rooms.push(room);
+  });
+
+}
+
 const ID = generateId();
 const roomsInfo = [];
 
@@ -71,20 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   calculate.addEventListener("click", event => {
     event.preventDefault();
-
     const entirePrice = document.querySelector("#price");
-    const numberHousemates = Number(document.querySelector("#housemates").value);
     const valueSharedAreas = document.querySelector("#common");
     const roomSizes = document.getElementsByClassName('bedrooms');
     const roomMates = document.getElementsByClassName("roommates");
 
     // if (!entirePrice.value || !valueSharedAreas.value ||
-    //   !roomSizes.length || !roomMates.length) {
+    //   !roomSizes.length || !roomMates.length
+    //   ) {
     //   calculate.value = "Not So Fast";
-      // calculate.classList.add("move_away");
+    //   // calculate.classList.add("move_away");
     //   setTimeout(function () {
     //     calculate.value = "Calculate";
-    //   }, 3000);
+    //   }, 1000);
     //   return;
     // }
 
@@ -93,44 +122,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCommon = Number(valueSharedAreas.value) * Number(entirePrice.value) / 100;
     const remainingRent = Number(entirePrice.value) - totalCommon;
 
-    const totalArea = sizesArr.reduce((a, b) => a + b);
+    const totalArea = sizesArr.reduce((a, b) => a + b, 0);
     const percentages = sizesArr.map(size => {
 
       return size * remainingRent / totalArea;
     });
 
-    // const rents = percentages.map(percentage => Math.round(percentage + totalCommon / Number(numberHousemates)));
-
-
     document.querySelector("footer").classList.remove("hidden");
+
     roomsInfo.forEach((room, idx) => {
       let numRoommates = Number(document.querySelector("#room" + room.id).firstElementChild.nextSibling.firstChild.nextElementSibling.value);
-      // numberHousemates += numRoommates;
       room.roommates = numRoommates;
       room.dimentions = Number(document.querySelector("#room" + room.id).firstElementChild.firstChild.nextElementSibling.value);
       room.roomPrice = percentages[idx] / room.roommates;
-      room.totalPrice = (percentages[idx] / room.roommates) + (totalCommon / numberHousemates);
-
+      room.totalPrice = (percentages[idx] / room.roommates) + (totalCommon / countHousemates(roomsInfo));
     });
+
+    removeIncompleteRooms(roomsInfo);
 
     let html = "";
     roomsInfo.forEach((room, i) => {
 
-      html += `<p>Room ${room.id} has ${room.roommates} occupant paying a total rent of ${Math.round(room.roomPrice + totalCommon / Number(numberHousemates))} each</p>`;
+      html += `<p>Room ${room.id} has ${room.roommates} occupant paying a total rent of ${Math.round(room.roomPrice + totalCommon / countHousemates(roomsInfo))} each</p>`;
     });
 
     totals.innerHTML = html;
 
     commonAreaValue.textContent = `The value of common area is ${Math.round(totalCommon)}`;
-    commonAreaValueForEach.textContent = `Each of the ${numberHousemates} flatmates pays ${Math.round(totalCommon / Number(numberHousemates))} for an equal share of the common areas.`;
-    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}`;
+    commonAreaValueForEach.textContent = `Each of the ${countHousemates(roomsInfo)} flatmates pays ${Math.round(totalCommon / countHousemates(roomsInfo))} for an equal share of the common areas.`;
+    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}. This is divided by the ${countHousemates(roomsInfo)} housemates according to how many people share the same room.`;
     // totals.textContent = `Each room plus share of common area will total to: ${rents.join(" ")}`;
 
-
-
-    console.log(roomsInfo);
-    console.log(numberHousemates);
-
+    // console.log(countHousemates(roomsInfo));
+    // console.log(getNumOfRooms(roomsInfo));
   });
 });
 
