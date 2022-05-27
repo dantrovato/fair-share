@@ -78,6 +78,11 @@ function removeIncompleteRooms(rooms) {
   });
 }
 
+function removeErrorSettings(tooltip, target) {
+  tooltip.classList.add("hidden");
+  target.style.backgroundColor = null;
+}
+
 const ID = generateId();
 const roomsInfo = [];
 
@@ -94,13 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   entirePrice.addEventListener("blur", event => {
     tooltip.classList.add("hidden");
+    entirePrice.style.backgroundColor = null;
+    // removeErrorSettings(tooltip, entirePrice);
     if (!entirePrice.value) {
       tooltip.classList.remove("hidden");
       tooltip.textContent = "Please enter price for the entire property";
+      entirePrice.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
       entirePrice.focus();
       return;
     }
-
     commonField.classList.remove("hidden");
     valueSharedAreas.focus();
     return;
@@ -108,10 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   valueSharedAreas.addEventListener("blur", event => {
     tooltip.classList.add("hidden");
+    entirePrice.style.backgroundColor = null;
     if (!valueSharedAreas.value) {
       tooltip.classList.remove("hidden");
       tooltip.textContent = "Please enter estimated value of common areas";
-
+      valueSharedAreas.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+      valueSharedAreas.focus();
       return;
     }
 
@@ -120,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addRoomInfo();
 
     const bedrooms = document.querySelector(".bedrooms");
-    // bedrooms.focus();
+    bedrooms.focus();
     const roommates = document.querySelector(".roommates");
 
     bedrooms.addEventListener("blur", event => {
@@ -129,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!bedrooms.value) {
         tooltip.classList.remove("hidden");
         tooltip.textContent = "Please enter the room dimentions";
-        // bedrooms.focus();
-        bedrooms.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        bedrooms.focus();
+        bedrooms.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
         return;
       }
 
@@ -144,12 +153,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     roommates.addEventListener("blur", event => {
       tooltip.classList.add("hidden");
-      bedrooms.style.backgroundColor = null;
+      roommates.style.backgroundColor = null;
       if (!roommates.value) {
         tooltip.classList.remove("hidden");
         tooltip.textContent = "Please enter the number of people taking this room";
-        // roommates.focus();
-        roommates.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        roommates.focus();
+        roommates.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
         return;
       }
 
@@ -232,6 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     commonAreaValue.textContent = `The value of common area is ${Math.round(totalCommon)}`;
     commonAreaValueForEach.textContent = `Each of the ${countHousemates(roomsInfo)} flatmates pays ${Math.round(totalCommon / countHousemates(roomsInfo))} for an equal share of the common areas.`;
-    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}. This is divided by the ${countHousemates(roomsInfo)} housemates according to how the size of the room and number of people sharing the same room.`;
+    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}. This is divided by the ${countHousemates(roomsInfo)} housemates according to the size of the rooms and number of people occupying them.`;
   });
 });
