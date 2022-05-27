@@ -11,6 +11,7 @@
     </header>
     <main>
       <form class="" action="index.html" method="post">
+        <fieldset class="tooltip hidden"></fieldset>
         <fieldset>
           <label for="price">Enter Price for Entire Property</label>
           <input type="text" name="" id="price" placeholder="£3000">
@@ -19,56 +20,15 @@
           <label for="housemates">Enter Number of Housemates</label>
           <input type="text" name="" id="housemates" placeholder="ex. 5">
         </fieldset> -->
-        <fieldset>
+        <fieldset id="common_fieldset" class="hidden">
           <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 30%</label>
           <input type="text" name="" id="common" placeholder="ex. 30%">
         </fieldset>
-        <fieldset class="room_size" id="initial_add_room">
-          <!-- <div class="room_info">
-            <label for="bedrooms">Enter Dimensions of Room <span>1</span> in Metres or Feet</label>
-            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9">
-          </div>
-          <div class="room_info">
-            <label for="roommates">How Many People Will Live in This Room?</label>
-            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1">
-          </div> -->
-          <button id="add_room" type="button" name="button">Add Room Info</button>
-        </fieldset>
-        <!-- <fieldset class="room_size">
-          <div class="room_info">
-            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
-            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="12">
-          </div>
-          <div class="room_info">
-            <label for="roommates">How Many People Will Live in This Room?</label>
-            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
-          </div>
-          <button id="add_room" type="button" name="button">Add Another Room</button>
-        </fieldset>
-        <fieldset class="room_size">
-          <div class="room_info">
-            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
-            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="10.8">
-          </div>
-          <div class="room_info">
-            <label for="roommates">How Many People Will Live in This Room?</label>
-            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
-          </div>
-          <button id="add_room" type="button" name="button">Add Another Room</button>
-        </fieldset>
-        <fieldset class="room_size">
-          <div class="room_info">
-            <label for="bedrooms">Enter Dimensions of Largest Room in Metres or Feet</label>
-            <input type="text" name="" id="bedrooms" class="bedrooms" placeholder="ex. 3.8 * 2.9" value="9.9">
-          </div>
-          <div class="room_info">
-            <label for="roommates">How Many People Will Live in This Room?</label>
-            <input type="text" name="" id="roommates" class="roommates" placeholder="ex. 1" value="1">
-          </div>
-          <button id="add_room" type="button" name="button">Add Another Room</button>
-        </fieldset> -->
-
-        <input id="calculate" type="submit" value="Calculate" class="submit" href="#">
+        <!-- <fieldset class="room_size" id="initial_add_room"> -->
+          <!-- <button id="add_room" type="button" name="button">Add Room Info</button> -->
+        <!-- </fieldset> -->
+        <button id="add_room" type="button" name="button" class="hidden">Add Room</button>
+        <input id="calculate" type="submit" value="Calculate" class="submit hidden" href="#">
       </form>
     </main>
     <footer class="hidden">

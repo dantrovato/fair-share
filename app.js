@@ -2,10 +2,10 @@ function addRoomInfo() {
   const id = ID();
   roomsInfo.push({id: id});
 
-  const initialAddRoom = document.querySelector("#initial_add_room").classList.add("hidden");
+  // const initialAddRoom = document.querySelector("#initial_add_room").classList.add("hidden");
   const form = document.querySelector("form");
   const roomSize = document.querySelector(".room_size");
-  const button = document.querySelector("#add_room");
+  // const button = document.querySelector("#add_room");
   const calculate = document.querySelector("#calculate");
   const fieldset = document.createElement("fieldset");
   fieldset.classList.add("room_size");
@@ -20,18 +20,18 @@ function addRoomInfo() {
   firstDiv.classList.add("room_info");
   secondDiv.classList.add("room_info");
   firstLabel.setAttribute("for", "bedroom");
-  firstLabel.textContent = `Enter Dimensions of Room ${id} in Metres or Feet`;
+  firstLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in Metres or Feet`;
   firstInput.setAttribute("type", "text");
-  firstInput.setAttribute("id", "bedrooms");
+  // firstInput.setAttribute("id", "bedrooms");
   firstInput.setAttribute("class", "bedrooms");
   firstInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
   secondLabel.setAttribute("for", "roommates");
   secondLabel.textContent = "How Many People Will Live in This Room?";
   secondInput.setAttribute("type", "text");
-  secondInput.setAttribute("id", "roommates");
+  // secondInput.setAttribute("id", "roommates");
   secondInput.setAttribute("class", "roommates");
   secondInput.setAttribute("placeholder", "ex. 1");
-  button.setAttribute("id", "add_room");
+  // button.setAttribute("id", "add_room");
 
   fieldset.appendChild(firstDiv);
   fieldset.appendChild(secondDiv);
@@ -39,7 +39,7 @@ function addRoomInfo() {
   firstDiv.appendChild(firstInput);
   secondDiv.appendChild(secondLabel);
   secondDiv.appendChild(secondInput);
-  fieldset.appendChild(button);
+  // fieldset.appendChild(button);
   form.appendChild(fieldset);
   form.appendChild(calculate);
 }
@@ -64,58 +64,136 @@ function getNumOfRooms(rooms) {
   return rooms.map(room => room.id).sort().reverse()[0];
 }
 
-function removeIncompleteRooms(rooms) { // ========================================================================
-  // remove from page and from object:
-
-  // get ids of rooms that are incomplete
-const incompleteRoomsID = rooms.filter(room => room.roommates === 0 || room.dimentions === 0).map(room => room.id);
-incompleteRoomsID.forEach(id => {
-  let room = document.querySelector(`#room${id}`);
-  room.remove();
-});
+function removeIncompleteRooms(rooms) {
+  const incompleteRoomsID = rooms.filter(room => room.roommates === 0 || room.dimentions === 0).map(room => room.id);
+  incompleteRoomsID.forEach(id => {
+    let room = document.querySelector(`#room${id}`);
+    room.remove();
+  });
 
   const completeRooms = rooms.filter(room => room.roommates !== 0 && room.dimentions !== 0);
   rooms.length = 0;
   completeRooms.forEach(room => {
     rooms.push(room);
   });
-
 }
 
 const ID = generateId();
 const roomsInfo = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+  const calculate = document.querySelector("#calculate");
   const addRoom = document.querySelector("#add_room");
+  const main = document.querySelector("main");
+  const entirePrice = document.querySelector("#price");
+  let commonField = document.querySelector("#common_fieldset");
+  const valueSharedAreas = document.querySelector("#common");
+  const tooltip = document.querySelector(".tooltip");
+
+  entirePrice.focus();
+
+  entirePrice.addEventListener("blur", event => {
+    tooltip.classList.add("hidden");
+    if (!entirePrice.value) {
+      tooltip.classList.remove("hidden");
+      tooltip.textContent = "Please enter price for the entire property";
+      entirePrice.focus();
+      return;
+    }
+
+    commonField.classList.remove("hidden");
+    valueSharedAreas.focus();
+    return;
+  });
+
+  valueSharedAreas.addEventListener("blur", event => {
+    tooltip.classList.add("hidden");
+    if (!valueSharedAreas.value) {
+      tooltip.classList.remove("hidden");
+      tooltip.textContent = "Please enter estimated value of common areas";
+
+      return;
+    }
+
+    // addRoom.classList.remove("hidden");
+    // calculate.classList.remove("hidden");
+    addRoomInfo();
+
+    const bedrooms = document.querySelector(".bedrooms");
+    // bedrooms.focus();
+    const roommates = document.querySelector(".roommates");
+
+    bedrooms.addEventListener("blur", event => {
+      tooltip.classList.add("hidden");
+      bedrooms.style.backgroundColor = null;
+      if (!bedrooms.value) {
+        tooltip.classList.remove("hidden");
+        tooltip.textContent = "Please enter the room dimentions";
+        // bedrooms.focus();
+        bedrooms.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        return;
+      }
+
+      if (roommates.value) {
+        addRoom.classList.remove("hidden");
+        calculate.classList.remove("hidden");
+        addRoomInfo();
+        main.appendChild(addRoom);
+      }
+    });
+
+    roommates.addEventListener("blur", event => {
+      tooltip.classList.add("hidden");
+      bedrooms.style.backgroundColor = null;
+      if (!roommates.value) {
+        tooltip.classList.remove("hidden");
+        tooltip.textContent = "Please enter the number of people taking this room";
+        // roommates.focus();
+        roommates.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        return;
+      }
+
+      if (bedrooms.value) {
+        addRoom.classList.remove("hidden");
+        calculate.classList.remove("hidden");
+        addRoomInfo();
+        main.appendChild(addRoom);
+      }
+    });
+  });
+
+
 
   addRoom.addEventListener("click", event => {
     event.preventDefault();
     addRoomInfo();
+    // main.appendChild(addRoom);
+    main.appendChild(calculate);
   });
 
-  const calculate = document.querySelector("#calculate");
   const commonAreaValue = document.querySelector("#common_area_value");
   const commonAreaValueForEach = document.querySelector("#common_area_value_for_each");
   const rentForRooms = document.querySelector("#rent_for_rooms");
   const totals = document.querySelector("#totals");
+  const roomSizes = document.getElementsByClassName('bedrooms');
+  const roomMates = document.getElementsByClassName("roommates");
 
   calculate.addEventListener("click", event => {
     event.preventDefault();
-    const entirePrice = document.querySelector("#price");
-    const valueSharedAreas = document.querySelector("#common");
-    const roomSizes = document.getElementsByClassName('bedrooms');
-    const roomMates = document.getElementsByClassName("roommates");
 
-    // if (!entirePrice.value || !valueSharedAreas.value ||
-    //   !roomSizes.length || !roomMates.length
-    //   ) {
-    //   calculate.value = "Not So Fast";
-    //   // calculate.classList.add("move_away");
-    //   setTimeout(function () {
-    //     calculate.value = "Calculate";
-    //   }, 1000);
-    //   return;
-    // }
+    // const roomSizes = document.getElementsByClassName('bedrooms');
+    // const roomMates = document.getElementsByClassName("roommates");
+
+    if (!entirePrice.value || !valueSharedAreas.value ||
+      !roomSizes.length || !roomMates.length
+      ) {
+      calculate.value = "Not So Fast";
+      // calculate.classList.add("move_away");
+      setTimeout(function () {
+        calculate.value = "Calculate";
+      }, 1000);
+      return;
+    }
 
     let sizesArr = [... roomSizes].map(room => Number(room.value));
     const matesArr = [... roomMates].map(mates => mates.value);
@@ -128,8 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return size * remainingRent / totalArea;
     });
 
-    document.querySelector("footer").classList.remove("hidden");
-
     roomsInfo.forEach((room, idx) => {
       let numRoommates = Number(document.querySelector("#room" + room.id).firstElementChild.nextSibling.firstChild.nextElementSibling.value);
       room.roommates = numRoommates;
@@ -140,22 +216,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     removeIncompleteRooms(roomsInfo);
 
-    let html = "";
-    roomsInfo.forEach((room, i) => {
+    if (!roomsInfo.length) {
+      return;
+    }
 
-      html += `<p>Room ${room.id} has ${room.roommates} occupant paying a total rent of ${Math.round(room.roomPrice + totalCommon / countHousemates(roomsInfo))} each</p>`;
+    document.querySelector("footer").classList.remove("hidden");
+
+    let html = "";
+    roomsInfo.forEach((room, idx) => {
+
+      html += `<p>Room ${idx + 1} has ${room.roommates} occupant paying a total rent of ${Math.round(room.roomPrice + totalCommon / countHousemates(roomsInfo))} each</p>`;
     });
 
     totals.innerHTML = html;
 
     commonAreaValue.textContent = `The value of common area is ${Math.round(totalCommon)}`;
     commonAreaValueForEach.textContent = `Each of the ${countHousemates(roomsInfo)} flatmates pays ${Math.round(totalCommon / countHousemates(roomsInfo))} for an equal share of the common areas.`;
-    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}. This is divided by the ${countHousemates(roomsInfo)} housemates according to how many people share the same room.`;
-    // totals.textContent = `Each room plus share of common area will total to: ${rents.join(" ")}`;
-
-    // console.log(countHousemates(roomsInfo));
-    // console.log(getNumOfRooms(roomsInfo));
+    rentForRooms.textContent = `Remaining rent is ${Math.round(remainingRent)}. This is divided by the ${countHousemates(roomsInfo)} housemates according to how the size of the room and number of people sharing the same room.`;
   });
 });
-
-// take id of room and take note of how many people that room will have. then each roommate adds share of common area
