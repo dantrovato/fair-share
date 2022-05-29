@@ -3,37 +3,36 @@ function addRoomInfo() {
   roomsInfo.push({id: id});
 
   const form = document.querySelector("form");
-  // const calculate = document.querySelector("#calculate");
+
   const fieldset = document.createElement("fieldset");
   fieldset.classList.add("room_size");
   fieldset.id = "room" + id;
-  const firstDiv = document.createElement("div");
-  const secondDiv = document.createElement("div");
-  const firstLabel = document.createElement("label");
-  const secondLabel = document.createElement("label");
-  const firstInput = document.createElement("input");
-  const secondInput = document.createElement("input");
+  const bedroomDiv = document.createElement("div");
+  const roommatesDiv = document.createElement("div");
+  const bedroomLabel = document.createElement("label");
+  const roommatesLabel = document.createElement("label");
+  const bedroomInput = document.createElement("input");
+  const roommatesInput = document.createElement("input");
 
-  firstDiv.classList.add("room_info");
-  secondDiv.classList.add("room_info");
-  firstLabel.setAttribute("for", "bedroom");
-  firstLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in Metres or Feet`;
-  firstInput.setAttribute("type", "text");
-  firstInput.setAttribute("class", "bedrooms");
-  firstInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
-  secondLabel.setAttribute("for", "roommates");
-  secondLabel.textContent = "How Many People Will Live in This Room?";
-  secondInput.setAttribute("type", "text");
-  secondInput.setAttribute("class", "roommates");
-  secondInput.setAttribute("placeholder", "ex. 1");
-  fieldset.appendChild(firstDiv);
-  fieldset.appendChild(secondDiv);
-  firstDiv.appendChild(firstLabel);
-  firstDiv.appendChild(firstInput);
-  secondDiv.appendChild(secondLabel);
-  secondDiv.appendChild(secondInput);
+  bedroomDiv.classList.add("room_info");
+  roommatesDiv.classList.add("room_info");
+  bedroomLabel.setAttribute("for", "bedroom");
+  bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
+  bedroomInput.setAttribute("type", "text");
+  bedroomInput.setAttribute("class", "bedrooms");
+  bedroomInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
+  roommatesLabel.setAttribute("for", "roommates");
+  roommatesLabel.textContent = "How Many People Will Live in This Room?";
+  roommatesInput.setAttribute("type", "text");
+  roommatesInput.setAttribute("class", "roommates");
+  roommatesInput.setAttribute("placeholder", "ex. 1");
+  fieldset.appendChild(bedroomDiv);
+  fieldset.appendChild(roommatesDiv);
+  bedroomDiv.appendChild(bedroomLabel);
+  bedroomDiv.appendChild(bedroomInput);
+  roommatesDiv.appendChild(roommatesLabel);
+  roommatesDiv.appendChild(roommatesInput);
   form.appendChild(fieldset);
-  // form.appendChild(calculate);
 }
 
 function generateId() {
@@ -107,14 +106,34 @@ document.addEventListener("DOMContentLoaded", () => {
     main.appendChild(calculate);
   }
 
+  function isInvalid(target) {
+    if (target.value.match(/[^\d\.]/)) {
+      return true;
+    } else if (target.value.match(/\./)) {
+      if (target.value.match(/\./g).length > 1) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   entirePrice.focus();
 
   entirePrice.addEventListener("blur", event => {
     resetInputError(entirePrice);
+
     if (!entirePrice.value) {
       handleInputError(entirePrice, "Please enter price for the entire property");
       return;
     }
+
+    if (isInvalid(entirePrice)) {
+      handleInputError(entirePrice, "Please only enter a valid number");
+      entirePrice.value = "";
+      return;
+    }
+
     commonField.classList.remove("hidden");
     valueSharedAreas.focus();
     return;
@@ -124,6 +143,12 @@ document.addEventListener("DOMContentLoaded", () => {
     resetInputError(valueSharedAreas);
     if (!valueSharedAreas.value) {
       handleInputError(valueSharedAreas, "Please enter estimated value of common areas");
+      return;
+    }
+
+    if (isInvalid(valueSharedAreas)) {
+      handleInputError(valueSharedAreas, "Please only enter a valid number");
+      valueSharedAreas.value = "";
       return;
     }
 
@@ -141,7 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (roommates.value) {
-        addRoomInfo();
+        if (roomsInfo.length === 1) {
+          addRoomInfo();
+        }
         showButtons()
       }
     });
@@ -149,20 +176,18 @@ document.addEventListener("DOMContentLoaded", () => {
     roommates.addEventListener("blur", event => {
       resetInputError(roommates);
       if (!roommates.value) {
-        handleInputError(roommates, "Please enter the number of people taking this room"  );
+        handleInputError(roommates, "Please enter the number of people taking this room");
         return;
       }
 
       if (bedrooms.value) {
-
-        addRoomInfo();
+        if (roomsInfo.length === 1) {
+          addRoomInfo();
+        }
         showButtons();
-
       }
     });
   });
-
-
 
   addRoom.addEventListener("click", event => {
     event.preventDefault();
