@@ -95,17 +95,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const valueSharedAreas = document.querySelector("#common");
   const tooltip = document.querySelector(".tooltip");
 
+  function handleInputError(target, message) {
+    tooltip.classList.remove("hidden");
+    tooltip.textContent = message;
+    target.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+    target.focus();
+  }
+
+  function resetInputError(target) {
+    tooltip.classList.add("hidden");
+    target.style.backgroundColor = null;
+  }
+
   entirePrice.focus();
 
   entirePrice.addEventListener("blur", event => {
-    tooltip.classList.add("hidden");
-    entirePrice.style.backgroundColor = null;
-    // removeErrorSettings(tooltip, entirePrice);
+    resetInputError(entirePrice);
     if (!entirePrice.value) {
-      tooltip.classList.remove("hidden");
-      tooltip.textContent = "Please enter price for the entire property";
-      entirePrice.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
-      entirePrice.focus();
+      handleInputError(entirePrice, "Please enter price for the entire property");
       return;
     }
     commonField.classList.remove("hidden");
@@ -114,18 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   valueSharedAreas.addEventListener("blur", event => {
-    tooltip.classList.add("hidden");
-    entirePrice.style.backgroundColor = null;
+    resetInputError(valueSharedAreas);
     if (!valueSharedAreas.value) {
-      tooltip.classList.remove("hidden");
-      tooltip.textContent = "Please enter estimated value of common areas";
-      valueSharedAreas.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
-      valueSharedAreas.focus();
+      handleInputError(valueSharedAreas, "Please enter estimated value of common areas");
       return;
     }
 
-    // addRoom.classList.remove("hidden");
-    // calculate.classList.remove("hidden");
     addRoomInfo();
 
     const bedrooms = document.querySelector(".bedrooms");
@@ -133,13 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const roommates = document.querySelector(".roommates");
 
     bedrooms.addEventListener("blur", event => {
-      tooltip.classList.add("hidden");
-      bedrooms.style.backgroundColor = null;
+      resetInputError(bedrooms);
       if (!bedrooms.value) {
-        tooltip.classList.remove("hidden");
-        tooltip.textContent = "Please enter the room dimentions";
-        bedrooms.focus();
-        bedrooms.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+        handleInputError(bedrooms, "Please enter the room dimentions");
         return;
       }
 
@@ -152,13 +149,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     roommates.addEventListener("blur", event => {
-      tooltip.classList.add("hidden");
-      roommates.style.backgroundColor = null;
+      resetInputError(roommates);
       if (!roommates.value) {
-        tooltip.classList.remove("hidden");
-        tooltip.textContent = "Please enter the number of people taking this room";
-        roommates.focus();
-        roommates.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+        handleInputError(roommates, "Please enter the number of people taking this room"  );
         return;
       }
 
