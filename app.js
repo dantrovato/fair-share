@@ -2,11 +2,8 @@ function addRoomInfo() {
   const id = ID();
   roomsInfo.push({id: id});
 
-  // const initialAddRoom = document.querySelector("#initial_add_room").classList.add("hidden");
   const form = document.querySelector("form");
-  const roomSize = document.querySelector(".room_size");
-  // const button = document.querySelector("#add_room");
-  const calculate = document.querySelector("#calculate");
+  // const calculate = document.querySelector("#calculate");
   const fieldset = document.createElement("fieldset");
   fieldset.classList.add("room_size");
   fieldset.id = "room" + id;
@@ -22,26 +19,21 @@ function addRoomInfo() {
   firstLabel.setAttribute("for", "bedroom");
   firstLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in Metres or Feet`;
   firstInput.setAttribute("type", "text");
-  // firstInput.setAttribute("id", "bedrooms");
   firstInput.setAttribute("class", "bedrooms");
   firstInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
   secondLabel.setAttribute("for", "roommates");
   secondLabel.textContent = "How Many People Will Live in This Room?";
   secondInput.setAttribute("type", "text");
-  // secondInput.setAttribute("id", "roommates");
   secondInput.setAttribute("class", "roommates");
   secondInput.setAttribute("placeholder", "ex. 1");
-  // button.setAttribute("id", "add_room");
-
   fieldset.appendChild(firstDiv);
   fieldset.appendChild(secondDiv);
   firstDiv.appendChild(firstLabel);
   firstDiv.appendChild(firstInput);
   secondDiv.appendChild(secondLabel);
   secondDiv.appendChild(secondInput);
-  // fieldset.appendChild(button);
   form.appendChild(fieldset);
-  form.appendChild(calculate);
+  // form.appendChild(calculate);
 }
 
 function generateId() {
@@ -107,6 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
     target.style.backgroundColor = null;
   }
 
+  function showButtons() {
+    addRoom.classList.remove("hidden");
+    addRoom.classList.add("block");
+    calculate.classList.remove("hidden");
+    main.appendChild(addRoom);
+    main.appendChild(calculate);
+  }
+
   entirePrice.focus();
 
   entirePrice.addEventListener("blur", event => {
@@ -141,10 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (roommates.value) {
-        addRoom.classList.remove("hidden");
-        calculate.classList.remove("hidden");
         addRoomInfo();
-        main.appendChild(addRoom);
+        showButtons()
       }
     });
 
@@ -156,10 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (bedrooms.value) {
-        addRoom.classList.remove("hidden");
-        calculate.classList.remove("hidden");
+
         addRoomInfo();
-        main.appendChild(addRoom);
+        showButtons();
+
       }
     });
   });
@@ -169,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
   addRoom.addEventListener("click", event => {
     event.preventDefault();
     addRoomInfo();
-    // main.appendChild(addRoom);
     main.appendChild(calculate);
   });
 
@@ -182,9 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   calculate.addEventListener("click", event => {
     event.preventDefault();
-
-    // const roomSizes = document.getElementsByClassName('bedrooms');
-    // const roomMates = document.getElementsByClassName("roommates");
 
     if (!entirePrice.value || !valueSharedAreas.value ||
       !roomSizes.length || !roomMates.length

@@ -48,7 +48,7 @@ label {
   flex-direction: column;
 }
 
-.room_size div, .room_size button, fieldset, #calculate {
+.room_size div, #add_room, fieldset, #calculate {
   margin-bottom: 0.4rem;
 }
 
@@ -79,6 +79,10 @@ footer #results {
 
 .hidden {
   display: none;
+}
+
+.block {
+  display: block;
 }
 
 .tooltip {
