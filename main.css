@@ -57,15 +57,16 @@ label {
   justify-content: space-between;
 }
 
+.buffer {
+  border: 1px solid #568F6D;
+}
+
 .bedroom_div {
-  border-bottom: 1px solid #568F6D;
-  padding-bottom: 3rem;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 .roommates_div {
-  padding-top: 3rem;
-  margin-top: 0;
+  margin-top: 1rem;
 }
 
 button {
@@ -105,12 +106,16 @@ footer #results {
 }
 
 @media screen and (max-width: 750px) {
-	 fieldset .room_info {
+	 fieldset, .room_info {
      flex-direction: column;
    }
 
    fieldset input {
      height: 4rem;
      margin-top: 2rem;
+   }
+
+   #add_room {
+     width: 100%;
    }
 	}
