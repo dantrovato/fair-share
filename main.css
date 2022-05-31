@@ -93,7 +93,7 @@ footer #results {
   border-color: #568F6D;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 667px) {
 	 fieldset {
      flex-direction: column;
    }
