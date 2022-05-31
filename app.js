@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     roomsInfo.push({id: id});
 
     const form = document.querySelector("form");
-
     const fieldset = document.createElement("fieldset");
     fieldset.classList.add("room_size");
     fieldset.id = "room" + id;

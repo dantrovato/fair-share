@@ -93,8 +93,13 @@ footer #results {
   border-color: #568F6D;
 }
 
-@media screen and (min-width: 800px) {
-	 body {
-		font-size: 2.8rem;
-		}
+@media screen and (max-width: 750px) {
+	 fieldset {
+     flex-direction: column;
+   }
+
+   fieldset input {
+     height: 4rem;
+     margin-top: 2rem;
+   }
 	}
