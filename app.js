@@ -51,18 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
     fieldset.id = "room" + id;
     const bedroomDiv = document.createElement("div");
     const roommatesDiv = document.createElement("div");
+    const buffer = document.createElement("div");
     const bedroomLabel = document.createElement("label");
     const roommatesLabel = document.createElement("label");
     const bedroomInput = document.createElement("input");
     const roommatesInput = document.createElement("input");
 
     bedroomDiv.classList.add("room_info");
+    bedroomDiv.classList.add("bedroom_div");
     roommatesDiv.classList.add("room_info");
+    roommatesDiv.classList.add("roommates_div");
     bedroomLabel.setAttribute("for", "bedroom");
     bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
     bedroomInput.setAttribute("type", "text");
     bedroomInput.setAttribute("class", "bedrooms");
-    bedroomInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
+    bedroomInput.setAttribute("placeholder", "ex. 14");
     roommatesLabel.setAttribute("for", "roommates");
     roommatesLabel.textContent = "How Many People Will Live in This Room?";
     roommatesInput.setAttribute("type", "text");

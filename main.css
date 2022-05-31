@@ -57,6 +57,17 @@ label {
   justify-content: space-between;
 }
 
+.bedroom_div {
+  border-bottom: 1px solid #568F6D;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+}
+
+.roommates_div {
+  padding-top: 3rem;
+  margin-top: 0;
+}
+
 button {
   width: 20%;
   margin: auto;
@@ -93,8 +104,8 @@ footer #results {
   border-color: #568F6D;
 }
 
-@media screen and (max-width: 667px) {
-	 fieldset {
+@media screen and (max-width: 750px) {
+	 fieldset .room_info {
      flex-direction: column;
    }
 
