@@ -92,3 +92,9 @@ footer #results {
   margin-bottom: 0.4rem;
   border-color: #568F6D;
 }
+
+@media screen and (min-width: 800px) {
+	 body {
+		font-size: 2.8rem;
+		}
+	}

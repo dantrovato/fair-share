@@ -1,40 +1,3 @@
-function addRoomInfo() {
-  const id = ID();
-  roomsInfo.push({id: id});
-
-  const form = document.querySelector("form");
-
-  const fieldset = document.createElement("fieldset");
-  fieldset.classList.add("room_size");
-  fieldset.id = "room" + id;
-  const bedroomDiv = document.createElement("div");
-  const roommatesDiv = document.createElement("div");
-  const bedroomLabel = document.createElement("label");
-  const roommatesLabel = document.createElement("label");
-  const bedroomInput = document.createElement("input");
-  const roommatesInput = document.createElement("input");
-
-  bedroomDiv.classList.add("room_info");
-  roommatesDiv.classList.add("room_info");
-  bedroomLabel.setAttribute("for", "bedroom");
-  bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
-  bedroomInput.setAttribute("type", "text");
-  bedroomInput.setAttribute("class", "bedrooms");
-  bedroomInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
-  roommatesLabel.setAttribute("for", "roommates");
-  roommatesLabel.textContent = "How Many People Will Live in This Room?";
-  roommatesInput.setAttribute("type", "text");
-  roommatesInput.setAttribute("class", "roommates");
-  roommatesInput.setAttribute("placeholder", "ex. 1");
-  fieldset.appendChild(bedroomDiv);
-  fieldset.appendChild(roommatesDiv);
-  bedroomDiv.appendChild(bedroomLabel);
-  bedroomDiv.appendChild(bedroomInput);
-  roommatesDiv.appendChild(roommatesLabel);
-  roommatesDiv.appendChild(roommatesInput);
-  form.appendChild(fieldset);
-}
-
 function generateId() {
   let id = 0;
   return function() {
@@ -78,19 +41,87 @@ const ID = generateId();
 const roomsInfo = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  const calculate = document.querySelector("#calculate");
-  const addRoom = document.querySelector("#add_room");
-  const main = document.querySelector("main");
-  const entirePrice = document.querySelector("#price");
-  let commonField = document.querySelector("#common_fieldset");
-  const valueSharedAreas = document.querySelector("#common");
-  const tooltip = document.querySelector(".tooltip");
+  function addRoomInfo() {
+    const id = ID();
+    roomsInfo.push({id: id});
 
-  function handleInputError(target, message) {
+    const form = document.querySelector("form");
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.classList.add("room_size");
+    fieldset.id = "room" + id;
+    const bedroomDiv = document.createElement("div");
+    const roommatesDiv = document.createElement("div");
+    const bedroomLabel = document.createElement("label");
+    const roommatesLabel = document.createElement("label");
+    const bedroomInput = document.createElement("input");
+    const roommatesInput = document.createElement("input");
+
+    bedroomDiv.classList.add("room_info");
+    roommatesDiv.classList.add("room_info");
+    bedroomLabel.setAttribute("for", "bedroom");
+    bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
+    bedroomInput.setAttribute("type", "text");
+    bedroomInput.setAttribute("class", "bedrooms");
+    bedroomInput.setAttribute("placeholder", "ex. 3.8 * 2.9");
+    roommatesLabel.setAttribute("for", "roommates");
+    roommatesLabel.textContent = "How Many People Will Live in This Room?";
+    roommatesInput.setAttribute("type", "text");
+    roommatesInput.setAttribute("class", "roommates");
+    roommatesInput.setAttribute("placeholder", "ex. 1");
+    fieldset.appendChild(bedroomDiv);
+    fieldset.appendChild(roommatesDiv);
+    bedroomDiv.appendChild(bedroomLabel);
+    bedroomDiv.appendChild(bedroomInput);
+    roommatesDiv.appendChild(roommatesLabel);
+    roommatesDiv.appendChild(roommatesInput);
+    form.appendChild(fieldset);
+
+    function handleInput(event, otherInput) {
+      if (event.key === "Enter" && event.target.value) {
+        resetInputError(event.target);
+        if (!otherInput.value) {
+          otherInput.focus();
+        }
+        return;
+      } else if (!"1234567890.".split("").includes(event.key)) {
+        handleInputError(event.target, "Please only enter a valid number", event);
+        return;
+      } else if (event.target.value && event.target.value.split("").includes(".")) {
+        if (event.key === ".") {
+          handleInputError(event.target, "You entered two decimal numbers. That's not a thing", event);
+          event.target.textContent = "";
+          return;
+        }
+      } else if (isInvalid(event.target)) {
+        handleInputError(event.target, "Please only enter a valid number", event);
+        return;
+      } else if ("1234567890.".split("").includes(event.key)) {
+        return;
+      }
+
+      if (!event.target.value) {
+        handleInputError(event.target, "Please enter price for the entire property", event);
+        return;
+      }
+    }
+
+    bedroomInput.addEventListener("keypress", event => {
+      handleInput(event, roommatesInput);
+    });
+
+    roommatesInput.addEventListener("keypress", event => {
+      handleInput(event, bedroomInput);
+    });
+  }
+
+  function handleInputError(target, message, event) {
+    event.preventDefault();
     tooltip.classList.remove("hidden");
     tooltip.textContent = message;
     target.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
     target.focus();
+    target.value = "";
   }
 
   function resetInputError(target) {
@@ -118,75 +149,73 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
+  const calculate = document.querySelector("#calculate");
+  const addRoom = document.querySelector("#add_room");
+  const main = document.querySelector("main");
+  const entirePrice = document.querySelector("#price");
+  const commonField = document.querySelector("#common_fieldset");
+  const valueSharedAreas = document.querySelector("#common");
+  const tooltip = document.querySelector(".tooltip");
+
   entirePrice.focus();
 
-  entirePrice.addEventListener("blur", event => {
-    resetInputError(entirePrice);
-
-    if (!entirePrice.value) {
-      handleInputError(entirePrice, "Please enter price for the entire property");
+  entirePrice.addEventListener("keypress", event => {
+    if (event.key === "Enter" && event.target.value) {
+      resetInputError(event.target);
+      commonField.classList.remove("hidden");
+      valueSharedAreas.focus();
+      return;
+    } else if (!"1234567890.".split("").includes(event.key)) {
+      handleInputError(event.target, "Please only enter a valid number", event);
+      return;
+    } else if (event.target.value && event.target.value.split("").includes(".")) {
+      if (event.key === ".") {
+        handleInputError(event.target, "You entered two decimal numbers. That's not a thing", event);
+        event.target.textContent = "";
+        return;
+      }
+    } else if (isInvalid(event.target)) {
+      handleInputError(event.target, "Please only enter a valid number", event);
+      return;
+    } else if ("1234567890.".split("").includes(event.key)) {
       return;
     }
 
-    if (isInvalid(entirePrice)) {
-      handleInputError(entirePrice, "Please only enter a valid number");
-      entirePrice.value = "";
+    if (!event.target.value) {
+      handleInputError(event.target, "Please enter price for the entire property", event);
       return;
     }
-
-    commonField.classList.remove("hidden");
-    valueSharedAreas.focus();
-    return;
   });
 
-  valueSharedAreas.addEventListener("blur", event => {
-    resetInputError(valueSharedAreas);
-    if (!valueSharedAreas.value) {
-      handleInputError(valueSharedAreas, "Please enter estimated value of common areas");
+  valueSharedAreas.addEventListener("keypress", event => {
+    if (event.key === "Enter" && event.target.value) {
+      resetInputError(event.target);
+      addRoomInfo();
+      showButtons();
+      const bedrooms = document.querySelector(".bedrooms");
+      const roommates = document.querySelector(".roommates");
+      bedrooms.focus();
+      return;
+    } else if (!"1234567890.".split("").includes(event.key)) {
+      handleInputError(event.target, "Please only enter a valid number", event);
+      return;
+    } else if (event.target.value && event.target.value.split("").includes(".")) {
+      if (event.key === ".") {
+        handleInputError(event.target, "You entered two decimal numbers. That's not a thing", event);
+        event.target.textContent = "";
+        return;
+      }
+    } else if (isInvalid(event.target)) {
+      handleInputError(event.target, "Please only enter a valid number", event);
+      return;
+    } else if ("1234567890.".split("").includes(event.key)) {
       return;
     }
 
-    if (isInvalid(valueSharedAreas)) {
-      handleInputError(valueSharedAreas, "Please only enter a valid number");
-      valueSharedAreas.value = "";
+    if (!event.target.value) {
+      handleInputError(event.target, "Please enter price for the entire property", event);
       return;
     }
-
-    addRoomInfo();
-
-    const bedrooms = document.querySelector(".bedrooms");
-    bedrooms.focus();
-    const roommates = document.querySelector(".roommates");
-
-    bedrooms.addEventListener("blur", event => {
-      resetInputError(bedrooms);
-      if (!bedrooms.value) {
-        handleInputError(bedrooms, "Please enter the room dimentions");
-        return;
-      }
-
-      if (roommates.value) {
-        if (roomsInfo.length === 1) {
-          addRoomInfo();
-        }
-        showButtons()
-      }
-    });
-
-    roommates.addEventListener("blur", event => {
-      resetInputError(roommates);
-      if (!roommates.value) {
-        handleInputError(roommates, "Please enter the number of people taking this room");
-        return;
-      }
-
-      if (bedrooms.value) {
-        if (roomsInfo.length === 1) {
-          addRoomInfo();
-        }
-        showButtons();
-      }
-    });
   });
 
   addRoom.addEventListener("click", event => {
