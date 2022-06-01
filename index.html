@@ -9,18 +9,18 @@
   <body>
     <header>
       <h1>Fair Share</h1>
-      <h3>The quick way to work out who should pay what</h3>
+      <h3>The quick way to help you decide who should pay what</h3>
     </header>
     <main>
       <form class="" action="index.html" method="post">
         <fieldset class="tooltip hidden"></fieldset>
         <fieldset>
           <label for="price">Enter Price for Entire Property</label>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" name="" id="price" placeholder="ex. 3000">
+          <input type="text" inputmode="decimal" pattern="[0-9\.]*" name="" id="price" placeholder="ex. 3000">
         </fieldset>
         <fieldset id="common_fieldset" class="hidden">
           <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 30%</label>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" name="" id="common" placeholder="ex. 30">
+          <input type="text" inputmode="decimal" pattern="[0-9]*" name="" id="common" placeholder="ex. 30">
         </fieldset>
         <button id="add_room" type="button" name="button" class="hidden">Add Room</button>
         <input id="calculate" type="submit" value="Calculate" class="submit hidden" href="#">

@@ -64,14 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
     bedroomLabel.setAttribute("for", "bedroom");
     bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
     bedroomInput.setAttribute("type", "text");
-    bedroomInput.setAttribute("inputmode", "numeric");
+    bedroomInput.setAttribute("inputmode", "decimal");
     bedroomInput.setAttribute("pattern", "[0-9]*");
     bedroomInput.setAttribute("class", "bedrooms");
     bedroomInput.setAttribute("placeholder", "ex. 14");
     roommatesLabel.setAttribute("for", "roommates");
     roommatesLabel.textContent = "How Many People Will Live in This Room?";
     roommatesInput.setAttribute("type", "text");
-    roommatesInput.setAttribute("inputmode", "numeric");
+    roommatesInput.setAttribute("inputmode", "decimal");
     roommatesInput.setAttribute("pattern", "[0-9]*");
     roommatesInput.setAttribute("class", "roommates");
     roommatesInput.setAttribute("placeholder", "ex. 1");
