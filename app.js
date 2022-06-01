@@ -63,12 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
     roommatesDiv.classList.add("roommates_div");
     bedroomLabel.setAttribute("for", "bedroom");
     bedroomLabel.textContent = `Enter Dimensions of Room ${roomsInfo.length} in either square Metres or Feet`;
-    bedroomInput.setAttribute("type", "text");
+    bedroomInput.setAttribute("type", "number");
     bedroomInput.setAttribute("class", "bedrooms");
     bedroomInput.setAttribute("placeholder", "ex. 14");
     roommatesLabel.setAttribute("for", "roommates");
     roommatesLabel.textContent = "How Many People Will Live in This Room?";
-    roommatesInput.setAttribute("type", "text");
+    roommatesInput.setAttribute("type", "number");
     roommatesInput.setAttribute("class", "roommates");
     roommatesInput.setAttribute("placeholder", "ex. 1");
     fieldset.appendChild(bedroomDiv);
