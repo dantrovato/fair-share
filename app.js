@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
+  // const html = document.querySelector("html");
   const calculate = document.querySelector("#calculate");
   const addRoom = document.querySelector("#add_room");
   const main = document.querySelector("main");
@@ -241,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   calculate.addEventListener("click", event => {
     event.preventDefault();
-
+    document.querySelector("html").classList.add("taller");
     if (!entirePrice.value || !valueSharedAreas.value ||
       !roomSizes.length || !roomMates.length
       ) {
