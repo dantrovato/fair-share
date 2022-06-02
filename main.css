@@ -105,6 +105,10 @@ footer #results {
   flex-direction: column;
 }
 
+#common_area_value, #common_area_value_for_each, #rent_for_rooms {
+  padding-bottom: 2.4rem;
+}
+
 .hidden {
   display: none;
 }
