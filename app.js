@@ -119,6 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
     roommatesInput.addEventListener("keypress", event => {
       handleInput(event, bedroomInput);
     });
+
+    bedroomInput.focus();
   }
 
   function handleInputError(target, message, event) {
