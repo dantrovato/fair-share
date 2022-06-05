@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showButtons() {
     addRoom.classList.remove("hidden");
     addRoom.classList.add("block");
-    // calculate.classList.remove("hidden");
+    calculate.classList.remove("hidden");
     main.appendChild(addRoom);
     main.appendChild(calculate);
   }
