@@ -4,24 +4,26 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link rel="stylesheet" href="./resets.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./main.css" type="text/css">
     <title>Fair Share</title>
   </head>
   <body>
     <header>
-      <h1>Fair Share</h1>
-      <h3>The quick way to help you decide who should pay what</h3>
+      <h1 class="text-center h1 display-1">Fair Share</h1>
+      <h2 class="text-center h2 display-4">To help you decide who should pay what</h2>
     </header>
     <main>
       <form class="" action="index.html" method="post">
         <fieldset class="tooltip hidden"></fieldset>
         <fieldset>
           <label for="price">Enter Price for Entire Property</label>
-          <input type="number" name="" id="price" placeholder="ex. 3000">
+          <input type="number" name="" id="price" placeholder="ex. 3000" value="2600">
         </fieldset>
         <fieldset id="common_fieldset" class="hidden">
-          <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 30%</label>
-          <input type="number" step="0.1" name="" id="common" placeholder="ex. 30">
+          <label for="common">Enter Estimated Value of Common Areas (Bathrooms, Kitchen, Living Room, Garden etc.) as a Percentage of Entire Rent. Ex. 40%</label>
+          <!-- <span>Uh??</span> -->
+          <input type="number" step="0.1" name="" id="common" placeholder="ex. 40" value="40">
         </fieldset>
         <button id="add_room" type="button" name="button" class="hidden">Add Room</button>
         <input id="calculate" type="submit" value="Calculate" class="submit hidden" href="#">
